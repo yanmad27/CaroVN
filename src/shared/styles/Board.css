@@ -1,0 +1,13 @@
+.Board {
+    display: flex;
+    width: 546px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    margin: auto;
+}
+
+.verticalMark {
+    width:26px;
+    align-self: center;
+}
