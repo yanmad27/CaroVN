@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'shared/styles/Board.css';
 import Square from 'components/square/Square';
-//test git
+//test git123
 const WinType = {
     LeftToRight: 0,
     TopToBottom: 1,
