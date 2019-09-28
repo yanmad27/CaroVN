@@ -66,7 +66,7 @@ function App() {
   const [isX, setIsX] = React.useState(true);
   const [showNewMoveFirst, setShowNewMoveFirst] = React.useState(true);
 
-//just test git
+  //just test git
   let s_winner = '';
   if (winner === true) {
     s_winner = 'x';
