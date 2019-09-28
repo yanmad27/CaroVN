@@ -2,9 +2,6 @@ import React from 'react';
 import 'shared/styles/App.css';
 import Board from 'components/board/Board';
 
-
-//just test new branch
-
 function App() {
 
   let onPlayAgainClick = () => {
