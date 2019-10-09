@@ -1,20 +1,10 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
+import createDefaultBoard from 'reduxs/handlers/boardHandler';
 import '../../shared/styles/App.css';
 import Board from '../board/Board';
 
 function App() {
-  const createDefaultBoard = () => {
-    const defaultBoardData = [];
-    for (let i = 0; i < 30; i += 1) {
-      const tem = [];
-      for (let j = 0; j < 30; j += 1) {
-        tem.push(' ');
-      }
-      defaultBoardData.push(tem);
-    }
-    return defaultBoardData;
-  };
-
   const [boardData, setBoardData] = React.useState(createDefaultBoard());
   const [resetBoard, setResetBoard] = React.useState(false);
   const [winner, setWinner] = React.useState(undefined);

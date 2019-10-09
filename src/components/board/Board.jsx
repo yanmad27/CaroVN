@@ -1,4 +1,7 @@
+/* eslint-disable import/no-unresolved */
 import * as React from 'react';
+import { connect } from 'react-redux';
+import * as BoardActions from 'reduxs/reducers/board/action';
 import '../../shared/styles/Board.css';
 import Square from '../square/Square';
 
@@ -218,7 +221,8 @@ class Board extends React.Component {
   };
 
   render() {
-    const { width, height, resetBoard, isX } = this.props;
+    const { width, height, resetBoard, isX, boardState } = this.props;
+    console.log('this is new redux board state: ', boardState);
     return (
       <div>
         <div key={resetBoard} style={{ display: 'flex', flexDirection: 'row' }}>
@@ -231,4 +235,22 @@ class Board extends React.Component {
     );
   }
 }
-export default Board;
+
+const mapStateToProps = rootState => ({
+  boardState: rootState.board
+});
+
+const mapDispatchToProps = () => ({
+  setBoardData: BoardActions.setBoardData,
+  setCurrentMove: BoardActions.setCurrentMove,
+  setIsX: BoardActions.setIsX,
+  setWinIndex: BoardActions.setWinIndex,
+  setWinType: BoardActions.setWinType,
+  setMoveHistory: BoardActions.setMoveHistory,
+  setWinner: BoardActions.setWinner
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Board);
