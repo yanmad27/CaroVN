@@ -1,51 +1,58 @@
 import ActionTypes from './actionTypes';
 
-const doSetBoardData = newBoardData => {
+export const doSetBoardData = newBoardData => {
     return {
         type: ActionTypes.SET_BOARD_DATA,
         payload: newBoardData,
     }
 }
 
-const doSetWinner = newWinner => {
+export const doSetWinner = newWinner => {
     return {
         type: ActionTypes.SET_WINNER,
         payload: newWinner,
     }
 }
 
-const doSetWinIndex = newWinIndex => {
+export const doSetWinIndex = newWinIndex => {
     return {
         type: ActionTypes.SET_WININDEX,
         payload: newWinIndex,
     }
 }
 
-const doSetWinType = newWinType => {
+export const doSetWinType = newWinType => {
     return {
         type: ActionTypes.SET_WINTYPE,
         payload: newWinType,
     }
 }
 
-const doSetMoveHistory = newMoveHistory => {
+export const doSetMoveHistory = newMoveHistory => {
     return {
         type: ActionTypes.SET_MOVE_HISTORY,
         payload: newMoveHistory,
     }
 }
 
-const doSetCurrentMove = newCurrentMove => {
+export const doSetCurrentMove = newCurrentMove => {
     return {
         type: ActionTypes.SET_CURRENT_MOVE,
         payload: newCurrentMove,
     }
 }
 
-const doSetIsX = newIsX => {
+export const doSetIsX = newIsX => {
     return {
         type: ActionTypes.SET_ISX,
         payload: newIsX,
+    }
+}
+
+export const doSetResetBoard = newResetBoard => {
+    return {
+        type: ActionTypes.SET_RESET_BOARD,
+        payload: newResetBoard,
     }
 }
 export const setBoardData = (newBoardData) => async(dispatch) => {

@@ -1,21 +1,23 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
+import { connect } from 'react-redux';
 import createDefaultBoard from 'reduxs/handlers/boardHandler';
+import * as BoardActions from 'reduxs/reducers/board/action';
 import '../../shared/styles/App.css';
 import Board from '../board/Board';
 
-function App() {
-  const [boardData, setBoardData] = React.useState(createDefaultBoard());
-  const [resetBoard, setResetBoard] = React.useState(false);
-  const [winner, setWinner] = React.useState(undefined);
-  const [winIndex, setWinIndex] = React.useState(undefined);
-  const [winType, setWinType] = React.useState(undefined);
-  const [moveHistory, setMoveHistory] = React.useState([]);
-  const [currentMove, setCurrentMove] = React.useState(undefined);
-  const [isX, setIsX] = React.useState(true);
-  const [showNewMoveFirst, setShowNewMoveFirst] = React.useState(true);
-
-  const onPlayAgainClick = () => {
+class App extends React.Component {
+  onPlayAgainClick = () => {
+    const { resetBoard } = this.props;
+    const {
+      setResetBoard,
+      setWinner,
+      setWinIndex,
+      setWinType,
+      setBoardData,
+      setCurrentMove,
+      setMoveHistory
+    } = this.props;
     setResetBoard(resetBoard + 1);
     setWinner(undefined);
     setWinIndex(undefined);
@@ -26,12 +28,14 @@ function App() {
   };
 
   // eslint-disable-next-line no-unused-vars
-  const onJumpClick = value => _event => {
+  onJumpClick = value => _event => {
+    const { setIsX, setCurrentMove } = this.props;
     setIsX(!value.isX);
     setCurrentMove(value);
   };
 
-  const drawMoveHistory = () => {
+  drawMoveHistory = () => {
+    const { moveHistory, currentMove } = this.props;
     return moveHistory.map((value, index) => {
       return (
         <div
@@ -46,7 +50,7 @@ function App() {
             <div style={{ width: 15 }}>{value.j - 5}</div>
             <div style={{ width: 20 }}> {value.isX ? 'X' : 'O'}</div>
           </span>
-          <button onClick={onJumpClick(value)} type="button">
+          <button onClick={this.onJumpClick(value)} type="button">
             Jump
           </button>
           <span>
@@ -59,14 +63,15 @@ function App() {
     });
   };
 
-  // const tmp_winner = 'asdasd';
+  //  tmp_winner = 'asdasd';
   // if (winner === true) {
   //   s_winner = 'x';
   // } else if (winner === false) {
   //   s_winner = 'o';
   // }
 
-  const getWinner = () => {
+  getWinner = () => {
+    const { winner } = this.props;
     if (winner === true) {
       return 'x';
     }
@@ -76,66 +81,80 @@ function App() {
     return '';
   };
 
-  return (
-    <div className="App">
-      <span>CARO VN</span>
-      <div
-        style={{ display: 'flex', justifyContent: 'center', paddingLeft: 200 }}
-      >
-        <Board
-          key={resetBoard}
-          width={20}
-          height={20}
-          resetBoard={resetBoard}
-          boardData={boardData}
-          setBoardData={setBoardData}
-          winner={winner}
-          setWinner={setWinner}
-          winType={winType}
-          setWinType={setWinType}
-          winIndex={winIndex}
-          setWinIndex={setWinIndex}
-          moveHistory={moveHistory}
-          setMoveHistory={setMoveHistory}
-          currentMove={currentMove}
-          setCurrentMove={setCurrentMove}
-          isX={isX}
-          setIsX={setIsX}
-        />
-        <div style={{ width: 200, padding: 20 }}>
-          <div>
-            <span>History</span>
-            <button
-              type="button"
-              onClick={() => {
-                setShowNewMoveFirst(!showNewMoveFirst);
+  render() {
+    const { showNewMoveFirst, resetBoard, winner } = this.props;
+    const { setShowNewMoveFirst } = this.props;
+    return (
+      <div className="App">
+        <span>CARO VN</span>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            paddingLeft: 200
+          }}
+        >
+          <Board key={resetBoard} width={20} height={20} />
+          <div style={{ width: 200, padding: 20 }}>
+            <div>
+              <span>History</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNewMoveFirst(!showNewMoveFirst);
+                }}
+              >
+                Click me
+              </button>
+            </div>
+            <div
+              style={{
+                overflow: 'auto',
+                maxHeight: 231,
+                display: showNewMoveFirst ? 'block' : 'flex',
+                flexDirection: 'column-reverse'
               }}
             >
-              Click me
-            </button>
-          </div>
-          <div
-            style={{
-              overflow: 'auto',
-              maxHeight: 231,
-              display: showNewMoveFirst ? 'block' : 'flex',
-              flexDirection: 'column-reverse'
-            }}
-          >
-            {drawMoveHistory()}
+              {this.drawMoveHistory()}
+            </div>
           </div>
         </div>
+        <button type="button" onClick={this.onPlayAgainClick}>
+          Play again
+        </button>
+        <div>
+          <span hidden={winner === undefined} className="Winner">
+            Winner is {this.getWinner()}
+          </span>
+        </div>
       </div>
-      <button type="button" onClick={onPlayAgainClick}>
-        Play again
-      </button>
-      <div>
-        <span hidden={winner === undefined} className="Winner">
-          Winner is {getWinner()}
-        </span>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = rootState => {
+  return {
+    boardData: rootState.boardData,
+    winner: rootState.winner,
+    winType: rootState.winType,
+    winIndex: rootState.winIndex,
+    moveHistory: rootState.moveHistory,
+    currentMove: rootState.currentMove,
+    isX: rootState.isX
+  };
+};
+
+const mapDispatchToProps = {
+  setBoardData: BoardActions.doSetBoardData,
+  setCurrentMove: BoardActions.doSetCurrentMove,
+  setIsX: BoardActions.doSetIsX,
+  setWinIndex: BoardActions.doSetWinIndex,
+  setWinType: BoardActions.doSetWinType,
+  setMoveHistory: BoardActions.doSetMoveHistory,
+  setWinner: BoardActions.doSetWinner,
+  setResetBoard: BoardActions.doSetResetBoard
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

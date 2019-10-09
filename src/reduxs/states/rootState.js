@@ -1,25 +1,16 @@
-const appState = {
-    winner: undefined,
-}
-const boardState = {
-    resetBoard: null,
-    boardData: null,
-    winner: null,
-    winType: null,
-    winIndex: null,
-    moveHistory: null,
-    currentMove: null,
-    isX: null,
-}
-
-const squareState = {
-    test: false,
-}
+/* eslint-disable import/no-unresolved */
+import createDefaultBoard from 'reduxs/handlers/boardHandler';
 
 const RootState = {
-    app: appState,
-    board: boardState,
-    square: squareState
+    boardData: createDefaultBoard(),
+    resetBoard: false,
+    winner: undefined,
+    winIndex: undefined,
+    winType: undefined,
+    moveHistory: [],
+    currentMove: undefined,
+    isX: true,
+    showNewMoveFirst: true,
 };
 
 export default RootState;

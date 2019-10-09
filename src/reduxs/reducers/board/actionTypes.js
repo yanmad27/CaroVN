@@ -6,6 +6,7 @@ const ActionTypes = {
     SET_MOVE_HISTORY: 'SET_MOVE_HISTORY',
     SET_CURRENT_MOVE: 'SET_CURRENT_MOVE',
     SET_ISX: 'SET_ISX',
+    SET_RESET_BOARD: 'SET_RESET_BOARD',
 };
 
 export default ActionTypes;

@@ -160,7 +160,6 @@ class Board extends React.Component {
   getValueOfSquare = (i, j) => {
     const { currentMove, moveHistory } = this.props;
     let rs;
-
     for (let index = 0; index < moveHistory.length; index += 1) {
       const value = moveHistory[index];
       if (i === value.i && j === value.j) {
@@ -221,8 +220,7 @@ class Board extends React.Component {
   };
 
   render() {
-    const { width, height, resetBoard, isX, boardState } = this.props;
-    console.log('this is new redux board state: ', boardState);
+    const { width, height, resetBoard, isX } = this.props;
     return (
       <div>
         <div key={resetBoard} style={{ display: 'flex', flexDirection: 'row' }}>
@@ -236,19 +234,27 @@ class Board extends React.Component {
   }
 }
 
-const mapStateToProps = rootState => ({
-  boardState: rootState.board
-});
+const mapStateToProps = rootState => {
+  return {
+    boardData: rootState.boardData,
+    winner: rootState.winner,
+    winType: rootState.winType,
+    winIndex: rootState.winIndex,
+    moveHistory: rootState.moveHistory,
+    currentMove: rootState.currentMove,
+    isX: rootState.isX
+  };
+};
 
-const mapDispatchToProps = () => ({
-  setBoardData: BoardActions.setBoardData,
-  setCurrentMove: BoardActions.setCurrentMove,
-  setIsX: BoardActions.setIsX,
-  setWinIndex: BoardActions.setWinIndex,
-  setWinType: BoardActions.setWinType,
-  setMoveHistory: BoardActions.setMoveHistory,
-  setWinner: BoardActions.setWinner
-});
+const mapDispatchToProps = {
+  setBoardData: BoardActions.doSetBoardData,
+  setCurrentMove: BoardActions.doSetCurrentMove,
+  setIsX: BoardActions.doSetIsX,
+  setWinIndex: BoardActions.doSetWinIndex,
+  setWinType: BoardActions.doSetWinType,
+  setMoveHistory: BoardActions.doSetMoveHistory,
+  setWinner: BoardActions.doSetWinner
+};
 
 export default connect(
   mapStateToProps,
