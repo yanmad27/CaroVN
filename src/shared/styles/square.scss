@@ -1,0 +1,15 @@
+.containter {
+    display: inline;
+    .button {
+        width: 35px;
+        height: 35px;
+        margin: 2px;
+        min-width: 35px;
+        padding: 2px;
+        border-radius: 3px;
+        background: right;
+    }
+    .button:hover {
+        background: burlywood;
+    }
+}

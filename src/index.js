@@ -1,8 +1,6 @@
-/* eslint-disable import/no-unresolved */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'shared/styles/index.css';
+import 'shared/styles/index.scss';
 import * as serviceWorker from 'serviceWorker';
 import ReduxRoot from './reduxRoot';
 

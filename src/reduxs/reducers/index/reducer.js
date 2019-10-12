@@ -1,8 +1,12 @@
-/* eslint-disable import/no-unresolved */
-import { combineReducers } from "redux";
-import BoardReducer from 'reduxs/reducers/board/reducer';
 
-export default () =>
+import { combineReducers } from "redux";
+import BoardState from 'reduxs/reducers/board/reducer';
+import GameState from 'reduxs/reducers/game/reducer';
+import HistoryState from 'reduxs/reducers/history/reducer';
+
+export default
 combineReducers({
-    ...BoardReducer,
-});
+    BoardState,
+    GameState,
+    HistoryState,
+})

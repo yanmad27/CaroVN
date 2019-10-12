@@ -1,9 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as BoardActions from 'reduxs/reducers/board/action';
-import '../../shared/styles/Board.css';
-import Square from '../square/Square';
+import 'shared/styles/board.scss';
+import Square from 'components/square/Square';
 
 const WinType = {
   LeftToRight: 0,
@@ -179,81 +177,40 @@ class Board extends React.Component {
     return rs ? 'x' : 'o';
   };
 
-  drawBoard = (width, height, resetBoard) => {
-    const board = [];
-    const { isX, winner } = this.props;
-    const value = isX === true ? 'x' : 'o';
-    board.push(<span key={`${resetBoard}markV`} className="verticalMark" />);
-    for (let i = 0; i < height; i += 1) {
-      board.push(
-        <span key={`${resetBoard}markV${i}`} className="verticalMark">
-          {i}
-        </span>
-      );
+  Row = (width, rowId) => {
+    const row = [];
+    for (let i = 0; i < width; i += 1) {
+      row.push(<Square key={i} rowId={rowId + 5} colId={i + 5} />);
     }
-    for (let i = 0; i < height; i += 1) {
-      board.push(
-        <span className="verticalMark" key={`${resetBoard}markH${i}`}>
-          {String.fromCharCode(i + 65)}
-        </span>
-      );
-      for (let j = 0; j < width; j += 1) {
-        const key = i * 20 + j;
-        const isWinSquare = this.isWinSquare(i + 5, j + 5);
-        const defaultValue = this.getValueOfSquare(i + 5, j + 5);
-        board.push(
-          <Square
-            key={`${resetBoard}${key}`}
-            i={i + 5}
-            j={j + 5}
-            value={value}
-            defaultValue={defaultValue}
-            winner={winner}
-            isWinSquare={isWinSquare}
-            switchValue={this.switchValue}
-          />
-        );
-      }
-    }
+    return <div key={rowId} style={{display:'flex', flexWrap:'nowrap'}} >{row}</div>;
+  };
 
+  drawBoard = (height, width) => {
+    const board = [];
+    for (let i = 0; i < height; i += 1) {
+      board.push(this.Row(width, i));
+    }
     return board;
   };
 
   render() {
-    const { width, height, resetBoard, isX } = this.props;
+    const { width, height, resetBoard } = this.props;
     return (
       <div>
         <div key={resetBoard} style={{ display: 'flex', flexDirection: 'row' }}>
-          <div className="Board">
-            {this.drawBoard(width, height, resetBoard)}
-          </div>
+          <div className="Board">{this.drawBoard(width, height)}</div>
         </div>
-        <span>Next is: {isX === true ? 'x' : 'o'}</span>
       </div>
     );
   }
 }
 
-const mapStateToProps = rootState => {
+const mapStateToProps = state => {
   return {
-    boardData: rootState.boardData,
-    winner: rootState.winner,
-    winType: rootState.winType,
-    winIndex: rootState.winIndex,
-    moveHistory: rootState.moveHistory,
-    currentMove: rootState.currentMove,
-    isX: rootState.isX
   };
 };
 
 const mapDispatchToProps = {
-  setBoardData: BoardActions.doSetBoardData,
-  setCurrentMove: BoardActions.doSetCurrentMove,
-  setIsX: BoardActions.doSetIsX,
-  setWinIndex: BoardActions.doSetWinIndex,
-  setWinType: BoardActions.doSetWinType,
-  setMoveHistory: BoardActions.doSetMoveHistory,
-  setWinner: BoardActions.doSetWinner
 };
 
 export default connect(

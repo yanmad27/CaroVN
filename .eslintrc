@@ -12,7 +12,7 @@
     "no-underscore-dangle": 0,
     "import/imports-first": ["error", "absolute-first"],
     "import/newline-after-import": "error",
-    "import/no-unresolved": [2, { "caseSensitive": false }]
+    "import/no-unresolved": "off"
   },
   "globals": {
     "window": true,
