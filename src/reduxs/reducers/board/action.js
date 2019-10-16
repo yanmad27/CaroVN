@@ -1,6 +1,7 @@
 import ActionTypes from './actionTypes';
 
 export const emitUpdateBoardDataAction = newMove => {
+    console.log("BoardAction:: updateBoard is triggerd..., newMove: ", newMove);
     return {
         type: ActionTypes.UPDATE_BOARD_DATA,
         payload: newMove,

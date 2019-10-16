@@ -36,7 +36,7 @@ class Square extends React.Component {
       const willDisplayValue = nextTurnValue;
       this.displayValueState = willDisplayValue;
       switchNextValue();
-      addNewMove({ row: rowId, col: colId });
+      addNewMove({ row: rowId, col: colId, value: willDisplayValue });
       updateBoardData({ row: rowId, col: colId, value: willDisplayValue });
       this.isSatisfyingFiveNode(willDisplayValue);
     }
@@ -132,7 +132,7 @@ class Square extends React.Component {
   render() {
     const { boardData, rowId, colId } = this.props;
     const displayValue = boardData[rowId][colId];
-    console.log("Square:: render is trigger!!!");
+    console.log(`Square:: (${rowId},${colId}) render is trigger!!!`);
     return (
       <div className="containter" >
         <Button variant="contained" color="default" className="button" onClick={this.handleSquareClick}>

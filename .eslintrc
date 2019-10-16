@@ -12,7 +12,8 @@
     "no-underscore-dangle": 0,
     "import/imports-first": ["error", "absolute-first"],
     "import/newline-after-import": "error",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "no-console":"off"
   },
   "globals": {
     "window": true,

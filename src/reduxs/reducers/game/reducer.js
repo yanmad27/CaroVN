@@ -6,7 +6,6 @@ const INITIAL_STATE = {
 }
 
 const reverseNextTurnValue = (value) => {
-    console.log(value === 'X' ? 'O' : 'X');
     return value === 'X' ? 'O' : 'X';
 }
 

@@ -12,6 +12,8 @@ const historyReducer = (state = INITIAL_STATE, action) => {
             return { ...state, currentMove: action.payload };
         case ActionTypes.JUMP_TO_MOVE:
             return { ...state, currentMove: action.payload };
+        case ActionTypes.RESET_MOVE_HISTORY:
+            return { ...state, moveHistory: [] };
         default:
             return { ...state };
     }

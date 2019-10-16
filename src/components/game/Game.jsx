@@ -1,24 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AppBar from 'components/appBar/AppBar';
+import MoveHistory from 'components/history/History';
 import * as BoardActions from 'reduxs/reducers/board/action';
 import * as GameActions from 'reduxs/reducers/game/action';
+import * as HistoryActions from 'reduxs/reducers/history/action';
 import 'shared/styles/game.scss';
 
 import Board from '../board/Board';
 
-class App extends React.Component {
+class Game extends React.Component {
 
   onPlayAgainClick = () => {
-    const { resetBoard, resetWinner } = this.props;
+    const { resetBoard, resetWinner, resetMoveHistory } = this.props;
 
     resetWinner();
     resetBoard();
+    resetMoveHistory();
   }
 
-
   render() {
-    const { showNewMoveFirst, resetBoard } = this.props;
+    console.log("Game is rendering...");
     return (
       <div className="App">
         <AppBar />
@@ -30,7 +32,7 @@ class App extends React.Component {
             paddingLeft: 200
           }}
         >
-          <Board key={resetBoard} width={20} height={20} />
+          <Board width={20} height={20} />
           <div style={{ width: 200, padding: 20 }}>
             <div>
               <span>Next turn is: O</span>
@@ -41,16 +43,7 @@ class App extends React.Component {
             <div>
               <span>History</span>
             </div>
-            <div
-              style={{
-                overflow: 'auto',
-                maxHeight: 231,
-                display: showNewMoveFirst ? 'block' : 'flex',
-                flexDirection: 'column-reverse'
-              }}
-            >
-              {/* {this.drawMoveHistory(moveHistory)} */}
-            </div>
+            <MoveHistory />
           </div>
         </div>
       </div>
@@ -67,9 +60,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   resetBoard: BoardActions.emitResetBoardDataAction,
   resetWinner: GameActions.emitResetWinnerAction,
+  resetMoveHistory: HistoryActions.emitResetMoveHistoryAction,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(Game);
