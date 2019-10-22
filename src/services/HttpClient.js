@@ -1,5 +1,6 @@
 
 import history from 'historyConfig';
+import * as UserActions from 'reduxs/reducers/user/action';
 
 const axios = require('axios');
 
@@ -18,6 +19,7 @@ export const SignIn = async (username, password) => {
         console.log(user);
         if (user) {
             const { token } = response.data;
+            UserActions.signIn();
             window.localStorage.setItem('token', token);
             history.push('/game');
         }
