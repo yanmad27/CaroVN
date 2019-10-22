@@ -1,5 +1,7 @@
+import history from 'historyConfig';
+import * as UserHandler from 'reduxs/handlers/UserHandler';
+import { isNull } from 'util';
 import ActionTypes from './actionTypes';
-
 
 
 export const emitSignInAction = () => {
@@ -10,7 +12,15 @@ export const emitSignInAction = () => {
     }
 }
 
-export const signIn = () => async (dispatch) => {
+export const SignIn = (username, password) => async (dispatch) => {
+
     console.log("UserAction:: sign in is triggered...");
-    dispatch(emitSignInAction());
+    const responseData = await UserHandler.SignIn(username, password);
+    if (!isNull(responseData)) {
+
+        const { token } = responseData;
+        window.localStorage.setItem('token', token);
+        dispatch(emitSignInAction());
+        history.push('/game');
+    }
 }
