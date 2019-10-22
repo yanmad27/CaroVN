@@ -1,3 +1,6 @@
+
+import history from 'historyConfig';
+
 const axios = require('axios');
 
 const instance = axios.create({
@@ -12,14 +15,17 @@ export const SignIn = async (username, password) => {
     try {
         const response = await instance.post('/user/login', { username, password });
         const { user } = response.data;
+        console.log(user);
         if (user) {
             const { token } = response.data;
             window.localStorage.setItem('token', token);
+            history.push('/game');
         }
     }
     catch (error) {
         console.error(error);
     }
+    return false;
 }
 
 export const GetMe = async () => {

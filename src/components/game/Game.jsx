@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AppBar from 'components/appBar/AppBar';
 import MoveHistory from 'components/history/History';
 import * as BoardActions from 'reduxs/reducers/board/action';
 import * as GameActions from 'reduxs/reducers/game/action';
 import * as HistoryActions from 'reduxs/reducers/history/action';
 import 'shared/styles/game.scss';
-
+import { withRouter } from 'react-router';
 import Board from '../board/Board';
 
 class Game extends React.Component {
@@ -23,7 +22,6 @@ class Game extends React.Component {
     console.log("Game is rendering...");
     return (
       <div className="App">
-        <AppBar />
         <span>CARO VN</span>
         <div
           style={{
@@ -63,7 +61,7 @@ const mapDispatchToProps = {
   resetMoveHistory: HistoryActions.emitResetMoveHistoryAction,
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Game);
+)(Game));

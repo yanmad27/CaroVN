@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,10 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CardMedia from '@material-ui/core/CardMedia';
+import { withRouter } from 'react-router'
 
-import * as HttpClient from 'services/HttpClient';
+import logo from 'shared/images/minilogo.png';
 
-const logo = require("shared/images/logo.png");
+import * as UserHandler from 'reduxs/handlers/UserHandler';
 
 function Copyright() {
     return (
@@ -54,19 +55,25 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function SignIn() {
+function SignIn() {
     const classes = useStyles();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    HttpClient.SignIn('admin', 'admin');
+    const handleFormSubmition = (event) => {
+        event.preventDefault()
+        UserHandler.SignIn(username, password);
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <CardMedia component="img" src={logo} />
+                <CardMedia style={{ height: 350 }} component="img" src={logo} />
                 <Typography component="h1" variant="h5">
                     Sign in
         </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} onSubmit={handleFormSubmition}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -77,6 +84,7 @@ export default function SignIn() {
                         name="username"
                         autoComplete="username"
                         autoFocus
+                        onChange={event => { setUsername(event.target.value) }}
                     />
                     <TextField
                         variant="outlined"
@@ -88,6 +96,7 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={event => { setPassword(event.target.value) }}
                     />
                     {false &&
                         <FormControlLabel
@@ -106,7 +115,7 @@ export default function SignIn() {
           </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href=".asdas" variant="body2">
+                            <Link href="/" variant="body2">
                                 Forgot password?
               </Link>
                         </Grid>
@@ -121,6 +130,8 @@ export default function SignIn() {
             <Box mt={8}>
                 <Copyright />
             </Box>
-        </Container>
+        </Container >
     );
 }
+
+export default withRouter(SignIn);

@@ -4,20 +4,24 @@ import SignIn from 'components/signIn/SignIn';
 import SignUp from 'components/signUp/SignUp';
 import Game from 'components/game/Game';
 import {
-    BrowserRouter as Router,
+    Router,
     Switch,
     Route,
 } from 'react-router-dom';
-
 import 'shared/styles/game.scss';
+import AppBar from 'components/appBar/AppBar';
+
+import history from 'historyConfig';
+
 
 class App extends React.PureComponent {
 
     render() {
         return (
             <div >
-                <Router>
-                    <Switch>
+                <AppBar />
+                <Router history={history}>
+                    <Switch >
                         <Route exact path="/">
                             <SignIn />
                         </Route>

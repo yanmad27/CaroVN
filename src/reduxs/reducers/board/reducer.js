@@ -1,4 +1,4 @@
-import createDefaultBoard from 'reduxs/handlers/boardHandler';
+import createDefaultBoard from 'reduxs/handlers/BoardHandler';
 import ActionTypes from './actionTypes';
 
 const INITIAL_STATE = {
