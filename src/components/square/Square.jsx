@@ -132,7 +132,7 @@ class Square extends React.Component {
   render() {
     const { boardData, rowId, colId } = this.props;
     const displayValue = boardData[rowId][colId];
-    console.log(`Square:: (${rowId},${colId}) render is trigger!!!`);
+    // console.log(`Square:: (${rowId},${colId}) render is trigger!!!`);
     return (
       <div className="containter" >
         <Button variant="contained" color="default" className="button" onClick={this.handleSquareClick}>

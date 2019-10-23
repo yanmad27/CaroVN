@@ -6,6 +6,7 @@ import * as GameActions from 'reduxs/reducers/game/action';
 import * as HistoryActions from 'reduxs/reducers/history/action';
 import 'shared/styles/game.scss';
 import { withRouter } from 'react-router';
+import history from 'historyConfig';
 import Board from '../board/Board';
 
 class Game extends React.Component {
@@ -16,6 +17,13 @@ class Game extends React.Component {
     resetWinner();
     resetBoard();
     resetMoveHistory();
+  }
+
+  componentDidMount = () => {
+    const { userState } = this.props;
+    const { token } = userState;
+
+    if (token === '') history.push('/');
   }
 
   render() {
@@ -52,6 +60,7 @@ class Game extends React.Component {
 const mapStateToProps = state => {
   return {
     moveHistory: state.HistoryState.moveHistory,
+    userState: state.UserState,
   };
 };
 

@@ -21,6 +21,18 @@ export const SignIn = async (username, password) => {
     return null;
 }
 
+export const SignUp = async (username, password) => {
+    try {
+        const response = await instance.post('/user/register', { username, password });
+        console.log(response.data);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+    return null;
+}
+
 export const GetMe = async () => {
 
     try {
