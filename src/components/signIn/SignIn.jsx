@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -17,6 +18,8 @@ import { withRouter } from 'react-router'
 import logo from 'shared/images/minilogo.png';
 
 import * as UserActions from 'reduxs/reducers/user/action';
+
+import history from 'historyConfig';
 
 function Copyright() {
     return (
@@ -51,6 +54,13 @@ const useStyles = {
         marginTop: '16px',
         marginBottom: '28px',
     },
+    signup: {
+        color: '#3f51b5',
+        '&:hover': {
+            cursor: 'pointer',
+            textDecoration: 'underline',
+        }
+    }
 };
 
 class SignIn extends React.PureComponent {
@@ -60,22 +70,28 @@ class SignIn extends React.PureComponent {
         this.state = {
             username: '',
             password: '',
+            // firstLogin: true,
         }
     }
 
     handleFormSubmition = (event) => {
         event.preventDefault()
-        const { signIn } = this.props;
+        const { signIn, userState } = this.props;
         const { username, password } = this.state;
         console.log(username, password);
         signIn(username, password);
+        const { isSignIn } = userState;
+        if (!isSignIn) {
+            console.log("is sign in: ", isSignIn);
+            // this.setState({ firstLogin: false });
+        }
     }
 
 
     render() {
-        const { classes, userState } = this.props;
-        console.log(userState);
-        const { isSignIn } = userState;;
+        const { classes } = this.props;
+        // const { firstLogin } = this.state;
+        // const { isSignIn } = userState;
 
         return (
             <Container component="main" maxWidth="xs">
@@ -116,10 +132,10 @@ class SignIn extends React.PureComponent {
                                 label="Remember me"
                             />
                         }
-                        {!isSignIn &&
+                        {/* {(!firstLogin && !isSignIn ) &&
                             <span style={{ color: "red" }}>The username or password have entered is incorrect.
                             </span>
-                        }
+                        } */}
                         <Button
                             type="submit"
                             fullWidth
@@ -136,9 +152,9 @@ class SignIn extends React.PureComponent {
               </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="/signup" variant="body2">
+                                <span className={classes.signup} onKeyPress={() => { }} onClick={() => { history.push('/signup') }} variant="body2">
                                     {"Don't have an account? Sign Up"}
-                                </Link>
+                                </span>
                             </Grid>
                         </Grid>
                     </form>

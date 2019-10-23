@@ -2,7 +2,7 @@
 const axios = require('axios');
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://112.197.2.178:8080',
     timeout: 1000,
     headers: {
         'Content-Type': 'application/json',
@@ -12,6 +12,18 @@ const instance = axios.create({
 export const SignIn = async (username, password) => {
     try {
         const response = await instance.post('/user/login', { username, password });
+        console.log(response.data);
+        return response.data;
+    }
+    catch (error) {
+        console.error(error);
+    }
+    return null;
+}
+
+export const SignUp = async (username, password) => {
+    try {
+        const response = await instance.post('/user/register', { username, password });
         console.log(response.data);
         return response.data;
     }
