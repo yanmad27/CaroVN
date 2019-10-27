@@ -7,7 +7,8 @@ import * as HistoryActions from 'reduxs/reducers/history/action';
 import 'shared/styles/game.scss';
 import { withRouter } from 'react-router';
 import history from 'historyConfig';
-import Board from '../board/Board';
+import ChatBox from 'components/chatBox/ChatBox';
+import Board from 'components/board/Board';
 
 class Game extends React.Component {
 
@@ -35,10 +36,8 @@ class Game extends React.Component {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            paddingLeft: 200
           }}
         >
-          <Board width={20} height={20} />
           <div style={{ width: 200, padding: 20 }}>
             <div>
               <span>Next turn is: O</span>
@@ -51,6 +50,8 @@ class Game extends React.Component {
             </div>
             <MoveHistory />
           </div>
+          <Board width={20} height={20} />
+          <ChatBox />
         </div>
       </div>
     );
