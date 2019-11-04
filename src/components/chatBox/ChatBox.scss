@@ -14,11 +14,13 @@
   overflow: auto;
   margin-top: 5%;
   flex-direction: column-reverse;
+  display: flex;
 }
 
 .message {
   margin: 10px;
   display: flex;
+
   .avatar {
     border: 1px solid white;
     border-radius: 100%;
@@ -41,6 +43,11 @@
     word-break: break-word;
     text-align: start;
   }
+}
+
+.client {
+  flex-direction: row-reverse;
+  text-align: right;
 }
 
 .chat-input {

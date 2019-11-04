@@ -21,6 +21,7 @@ class Game extends React.Component {
   }
 
   componentDidMount = () => {
+
     const { userState } = this.props;
     const { token } = userState;
 
