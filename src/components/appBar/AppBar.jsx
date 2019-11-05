@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import * as UserActions from 'reduxs/reducers/user/action';
+import ContextMenu from 'components/contextMenu/ContextMenu';
 import './AppBar.scss';
 
 class ButtonAppBar extends React.Component {
@@ -21,8 +22,8 @@ class ButtonAppBar extends React.Component {
   render() {
 
     console.log("Appbar is rendering...");
-    const { userState, removeToken } = this.props;
-    const { token, username } = userState;
+    const { userState } = this.props;
+    const { token, username, nickname } = userState;
     const isLogin = token !== '';
     const { handleClick } = this;
 
@@ -41,8 +42,8 @@ class ButtonAppBar extends React.Component {
             <Typography variant="h6" className="title" />
             {isLogin ?
               <>
-                <span style={{ marginBottom: '4px' }}>Hello {username}</span>
-                <Button onClick={event => { handleClick('signin')(event); removeToken() }} color="inherit">sign out</Button>
+                <span style={{ marginBottom: '4px' }}>Hello {nickname === '' ? username : nickname}</span>
+                <ContextMenu />
               </> :
               <>
                 <Button onClick={handleClick('signin')} color="inherit">sign in</Button>

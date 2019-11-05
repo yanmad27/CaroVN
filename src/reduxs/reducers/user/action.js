@@ -1,14 +1,15 @@
 import history from 'historyConfig';
 import * as UserHandler from 'reduxs/handlers/UserHandler';
+import * as SocketActions from 'reduxs/reducers/socket/action';
 import { isNull } from 'util';
 import ActionTypes from './actionTypes';
 
 
-export const emitSignInAction = (username) => {
+export const emitSignInAction = (user) => {
     console.log("UserAction:: sign in is triggered...");
     return {
         type: ActionTypes.SIGN_IN,
-        payload: username,
+        payload: user,
     }
 }
 
@@ -41,19 +42,20 @@ export const SignIn = (username, password) => async (dispatch) => {
     if (!isNull(responseData)) {
 
         const { token, user } = responseData;
-        const { username: resUser } = user;
         dispatch(emitSetTokenAction(token));
-        dispatch(emitSignInAction(resUser));
+        dispatch(emitSignInAction(user));
+        dispatch(SocketActions.emitConnectAction());
         history.push('/game');
     }
 }
 
-export const SignUp = (username, password) => async (dispatch) => {
+export const SignUp = (nickname, username, password) => async (dispatch) => {
 
-    const responseData = await UserHandler.SignUp(username, password);
+    const responseData = await UserHandler.SignUp(nickname, username, password);
     console.log("UserAction:: sign up, res data: ", responseData);
 
-    if (responseData.messages.indexOf('Success') !== -1) {
+
+    if (!isNull(responseData) && responseData.messages.indexOf('Success') !== -1) {
 
         dispatch(emitSignUpAction(username, password));
         history.push('/signin');

@@ -4,13 +4,14 @@ const INITIAL_STATE = {
     isSignIn: false,
     signUpSuccessful: false,
     username: '',
+    nickname: '',
     token: '',
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ActionTypes.SIGN_IN:
-            return { ...state, isSignIn: true, username: action.payload };
+            return { ...state, isSignIn: true, username: action.payload.username, nickname: action.payload.nickname };
         case ActionTypes.SIGN_UP:
             return { ...state, signUpSuccessful: action.payload };
         case ActionTypes.SET_TOKEN:

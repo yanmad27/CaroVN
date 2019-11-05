@@ -8,8 +8,8 @@ export const SignIn = async (username, password) => {
 
 }
 
-export const SignUp = async (username, password) => {
-    const rs = await HttpClient.SignUp(username, password);
+export const SignUp = async (nickname, username, password) => {
+    const rs = await HttpClient.SignUp(nickname, username, password);
     console.log(rs);
     return rs;
 

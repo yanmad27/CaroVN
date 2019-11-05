@@ -11,6 +11,24 @@ const WinType = {
 };
 
 class Board extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    }
+  }
+
+  componentWillMount() {
+
+  }
+
+  // sendMove = (roomId, move) => {
+
+  //   const { socket } = this.state;
+  //   // socket.emit('move', { roomId, from, to , move });
+
+  // }
+
   switchValue = (tmpi, tmpj) => {
     const { setIsX, isX, boardData } = this.props;
 
@@ -182,7 +200,7 @@ class Board extends React.Component {
     for (let i = 0; i < width; i += 1) {
       row.push(<Square key={i} rowId={rowId + 5} colId={i + 5} />);
     }
-    return <div key={rowId} style={{display:'flex', flexWrap:'nowrap'}} >{row}</div>;
+    return <div key={rowId} style={{ display: 'flex', flexWrap: 'nowrap' }} >{row}</div>;
   };
 
   drawBoard = (height, width) => {
@@ -192,6 +210,8 @@ class Board extends React.Component {
     }
     return board;
   };
+
+
 
   render() {
     const { width, height, resetBoard } = this.props;
@@ -205,8 +225,9 @@ class Board extends React.Component {
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = state => {
   return {
+    SocketState: state.SocketState,
   };
 };
 

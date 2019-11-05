@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import SignIn from 'components/signIn/SignIn';
 import SignUp from 'components/signUp/SignUp';
 import Game from 'components/game/Game';
+import Profile from 'components/profile/Profile';
 import {
     Router,
     Switch,
@@ -33,6 +34,9 @@ class App extends React.PureComponent {
                         </Route>
                         <Route exact path="/game">
                             <Game />
+                        </Route>
+                        <Route exact path="/profile">
+                            <Profile />
                         </Route>
                     </Switch>
                 </Router>

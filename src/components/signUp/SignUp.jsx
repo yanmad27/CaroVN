@@ -67,24 +67,38 @@ class SignUp extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            nickname: '',
             username: '',
             password: '',
+            repassword: '',
+            errormessage: '',
         }
     }
 
     handleFormSubmition = (event) => {
         event.preventDefault();
         const { signUp } = this.props;
-        const { username, password } = this.state;
-        if (username.length < 6 || password.length < 6) {
-            return;
+        const { nickname, username, password, repassword } = this.state;
+        let invalid = true;
+        let errormessage = '';
+        if (username.length < 6) {
+            invalid = false;
+            errormessage = 'username too short';
+        } else if (password.length < 6) {
+            invalid = false;
+            errormessage = 'password too short';
+        } else if (password !== repassword) {
+            invalid = false;
+            errormessage = 'repassword invalid';
         }
-        
-        signUp(username, password);
-
+        this.setState({ errormessage });
+        if (invalid) {
+            signUp(nickname, username, password);
+        }
     }
 
     render() {
+        const { errormessage } = this.state;
         const { classes } = this.props;
         return (
             <Container component="main" maxWidth="xs" >
@@ -96,25 +110,16 @@ class SignUp extends React.PureComponent {
         </Typography>
                         <form className={classes.form} onSubmit={this.handleFormSubmition}>
                             <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12} sm={12}>
                                     <TextField
                                         autoComplete="fname"
-                                        name="firstName"
+                                        name="nickname"
                                         variant="outlined"
                                         fullWidth
-                                        id="firstName"
-                                        label="First Name"
+                                        id="nickname"
+                                        label="Nick Name"
                                         autoFocus
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        variant="outlined"
-                                        fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
-                                        autoComplete="lname"
+                                        onChange={event => { this.setState({ nickname: event.target.value }) }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -151,6 +156,7 @@ class SignUp extends React.PureComponent {
                                         type="password"
                                         id="passwordAgain"
                                         autoComplete="current-password"
+                                        onChange={event => { this.setState({ repassword: event.target.value }) }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -160,6 +166,7 @@ class SignUp extends React.PureComponent {
                                     />
                                 </Grid>
                             </Grid>
+                            <span style={{ color: "red" }}>{errormessage}</span>
                             <Button
                                 type="submit"
                                 fullWidth
