@@ -6,7 +6,6 @@ import * as HistoryActions from 'reduxs/reducers/history/action';
 import * as BoardActions from 'reduxs/reducers/board/action';
 import WinType from 'reduxs/models/winType';
 import 'shared/styles/square.scss';
-import { isUndefined } from 'util';
 
 class Square extends React.Component {
 
@@ -28,19 +27,28 @@ class Square extends React.Component {
 
 
 
-  handleSquareClick = () => {
-    const { winnerData, nextTurnValue, switchNextValue, addNewMove, rowId, colId, updateBoardData, boardData } = this.props;
-    const displayValue = boardData[rowId][colId];
+  // handleSquareClick = () => {
+  //   const { winnerData, nextTurnValue, switchNextValue, addNewMove, rowId, colId, updateBoardData, boardData, emitNewMove } = this.props;
+  //   const displayValue = boardData[rowId][colId];
 
-    if (displayValue === ' ' && isUndefined(winnerData)) {
-      const willDisplayValue = nextTurnValue;
-      this.displayValueState = willDisplayValue;
-      switchNextValue();
-      addNewMove({ row: rowId, col: colId, value: willDisplayValue });
-      updateBoardData({ row: rowId, col: colId, value: willDisplayValue });
-      this.isSatisfyingFiveNode(willDisplayValue);
-    }
+  //   if (displayValue === ' ' && isUndefined(winnerData)) {
+  //     const willDisplayValue = nextTurnValue;
+  //     this.displayValueState = willDisplayValue;
+  //     const newMove = { row: rowId, col: colId, value: willDisplayValue };
+  //     switchNextValue();
+  //     addNewMove(newMove);
+  //     updateBoardData(newMove);
+  //     emitNewMove(newMove);
+  //     this.isSatisfyingFiveNode(willDisplayValue);
+  //   }
+  // }
+
+  handleSquareClick = () => {
+    const { handleSquareClick, rowId, colId } = this.props;
+    handleSquareClick(rowId, colId, true)
   }
+
+
 
   isSatisfyingFiveNode = (displayValue) => {
     const {

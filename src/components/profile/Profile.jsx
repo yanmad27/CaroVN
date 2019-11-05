@@ -82,7 +82,7 @@ class Profile extends React.PureComponent {
 
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
 
     const { userState } = this.props;
     const { token } = userState;

@@ -20,3 +20,8 @@ export const emitResetMoveHistoryAction = () => {
         payload: null,
     }
 }
+
+export const addNewMoveAction = newMove => async dispatch => {
+
+    dispatch(emitAddNewMoveAction(newMove));
+}

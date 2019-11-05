@@ -30,7 +30,7 @@ class Game extends React.Component {
     resetMoveHistory();
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
 
     const { userState } = this.props;
     const { token } = userState;
