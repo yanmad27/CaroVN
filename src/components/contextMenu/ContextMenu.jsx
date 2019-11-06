@@ -48,10 +48,7 @@ function MenuListComposition(props) {
   const handleSignout = url => event => {
     history.push(url);
     props.removeToken();
-    const { socketState } = props;
-    const { socket } = socketState;
-    socket.disconnect();
-    SocketActions.Disconnect();
+    props.disconnect();
     handleClose(event);
   }
 
@@ -122,6 +119,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   removeToken: UserActions.RemoveToken,
+  disconnect: SocketActions.Disconnect,
 };
 
 

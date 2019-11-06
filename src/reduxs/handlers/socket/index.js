@@ -7,6 +7,7 @@ import store from '../../../store';
 
 export const disconnect = () => {
     const { socket } = store.getState().SocketState;
+    console.log('disconnect:: socket: ', socket);
     if (!isNull(socket)) {
 
         socket.disconnect()
@@ -22,11 +23,11 @@ export const getSocketID = () => {
     return -1;
 }
 
-export const emitFindPlayer = () => {
+export const emitFindPlayer = (dataTranfer) => {
     const { socket } = store.getState().SocketState;
     if (!isNull(socket)) {
 
-        socket.emit(GameEvents.FIND_PLAYER)
+        socket.emit(GameEvents.FIND_PLAYER, dataTranfer)
     }
 }
 
@@ -110,6 +111,25 @@ export const subcribeRequireTie = callback => {
     if (!isNull(socket)) {
 
         socket.on(GameEvents.REQUIRE_TIE, data => {
+            callback(data);
+        })
+    }
+}
+
+export const emitHaveWinner = dataTranfer => {
+    const { socket } = store.getState().SocketState;
+    if (!isNull(socket)) {
+
+        socket.emit(GameEvents.HAVE_WINNER, dataTranfer);
+    }
+}
+
+export const subcribeHaveWinner = callback => {
+    const { socket } = store.getState().SocketState;
+    if (!isNull(socket)) {
+
+
+        socket.on(GameEvents.HAVE_WINNER, data => {
             callback(data);
         })
     }

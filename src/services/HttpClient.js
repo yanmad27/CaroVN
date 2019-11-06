@@ -45,9 +45,9 @@ export const GetMe = async () => {
     }
 }
 
-export const SendPost = async (url) => {
+export const SendPost = async (url, formData) => {
     try {
-        const response = await instance.post(url);
+        const response = await instance.post(url, { ...formData });
         console.log(response);
         return response;
     } catch (error) {

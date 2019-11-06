@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import history from 'historyConfig';
+import * as UserActions from 'reduxs/reducers/user/action';
 
 function Copyright() {
   return (
@@ -49,7 +50,7 @@ const useStyles = {
   },
   submit: {
     marginTop: '16px',
-    marginBottom: '28px',
+    // marginBottom: '28px',
   },
   signin: {
     color: '#3f51b5',
@@ -65,21 +66,20 @@ class Profile extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      nickname: '',
     }
   }
 
   handleFormSubmition = (event) => {
     event.preventDefault();
-    const { signUp } = this.props;
-    const { username, password } = this.state;
-    if (username.length < 6 || password.length < 6) {
-      return;
-    }
+    const { userState } = this.props;
+    const { username } = userState;
+    const { nickname } = this.state;
+    const { updateInfo } = this.props;
 
-    signUp(username, password);
 
+    updateInfo({ username, nickname });
+    history.push('/main');
   }
 
   componentDidMount = () => {
@@ -113,6 +113,7 @@ class Profile extends React.PureComponent {
                     label="Nick Name"
                     autoFocus
                     defaultValue={userState.nickname}
+                    onChange={event => { this.setState({ nickname: event.target.value }) }}
                   />
                 </Grid>
 
@@ -130,13 +131,21 @@ class Profile extends React.PureComponent {
                 </Grid>
               </Grid>
               <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Đổi mật khẩu
+          </Button>
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
               >
-                Save
+                Lưu
           </Button>
             </form>
           </div >
@@ -157,6 +166,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
+  updateInfo: UserActions.updateInfo,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(Profile)));

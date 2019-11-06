@@ -64,6 +64,11 @@ class Board extends React.Component {
   }
 
   isSatisfyingFiveNode = (rowId, colId, displayValue) => {
+
+    const { SocketState } = this.props;
+    const from = SocketHandlers.getSocketID();
+    const { host } = SocketState;
+
     const {
       LeftToRight,
       BottomLeftToTopRight,
@@ -124,12 +129,14 @@ class Board extends React.Component {
         index1.j += isWin1 - 1;
         winner = { winner: nextTurnValue, winType: LeftToRight, winIndex: index1 };
         setWinner(winner);
+        SocketHandlers.emitHaveWinner({ from, host });
       }
     } else if (isWin2 > -1) {
       if (val2[isWin2 - 1] !== tmp || val2[isWin2 + 5] !== tmp) {
         index2.i += isWin2 - 1;
         winner = { winner: nextTurnValue, winType: TopToBottom, winIndex: index2 };
         setWinner(winner);
+        SocketHandlers.emitHaveWinner({ from, host });
       }
     } else if (isWin3 > -1) {
       if (val3[isWin3 - 1] !== tmp || val3[isWin3 + 5] !== tmp) {
@@ -137,6 +144,7 @@ class Board extends React.Component {
         index3.j += isWin3 - 1;
         winner = { winner: nextTurnValue, winType: TopLeftToBottomRight, winIndex: index3 };
         setWinner(winner);
+        SocketHandlers.emitHaveWinner({ from, host });
       }
     } else if (isWin4 > -1) {
       if (val4[isWin4 - 1] !== tmp || val4[isWin4 + 5] !== tmp) {
@@ -144,6 +152,7 @@ class Board extends React.Component {
         index4.j += isWin4 - 1;
         winner = { winner: nextTurnValue, winType: BottomLeftToTopRight, winIndex: index4 };
         setWinner(winner);
+        SocketHandlers.emitHaveWinner({ from, host });
       }
     }
   }

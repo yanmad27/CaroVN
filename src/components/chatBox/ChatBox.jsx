@@ -52,10 +52,15 @@ class ChatBox extends React.Component {
 
         return messageList.map((child, index) => {
             return (
-                <div key={`${index}`} className={`message ${child.from === socketId ? `client` : ``}`} >
-                    <div className="avatar" />
-                    <div className="content">{child.message} </div>
-                </div>
+                child.from !== 'sys' ?
+                    <div key={`${index}`} className={`message ${child.from === socketId ? `client` : ``}`} >
+                        <div className="avatar" />
+                        <div className="content">{child.message} </div>
+                    </div> :
+                    <div key={`${index}`} className='sys'>
+                        <div className="sys_content">{child.message}</div>
+                    </div>
+
             )
         })
     }

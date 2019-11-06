@@ -1,27 +1,31 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+import Spiner from 'shared/components/spiner/Spiner';
+import { DialogContent } from '@material-ui/core';
 
 export default function ResponsiveDialog(props) {
 
-    const { open, handleClose, handleAccept } = props;
+    const { open, ispared, turn } = props;
     return (
         <div>
             <Dialog
                 open={open}
-                onClose={handleClose}
                 aria-labelledby="responsive-dialog-title"
             >
-                <DialogActions>
-                    <Button autoFocus onClick={handleAccept} color="primary">
-                        Play
-          </Button>
-                    <Button onClick={handleClose} color="primary" autoFocus>
-                        Play Again
-          </Button>
-                </DialogActions>
+                {!ispared ?
+                    <DialogContent style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column"
+                    }}>
+                        <Spiner />
+                        <div><span>Đang tìm kiếm người chơi ...</span></div>
+                    </DialogContent> :
+                    <DialogContent>
+                        <div><span>Bạn đánh {turn}</span></div>
+                    </DialogContent>
+                }
             </Dialog>
-        </div>
+        </div >
     );
 }

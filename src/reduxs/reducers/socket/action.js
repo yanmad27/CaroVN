@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import * as SocketHandlers from 'reduxs/handlers/socket/index';
 import ActionTypes from './actionTypes';
 
 const server = `http://localhost:8013/`;
@@ -55,6 +56,6 @@ export const JoinHost = host => async (dispatch) => {
 }
 
 export const Disconnect = () => async (dispatch) => {
-
+    SocketHandlers.disconnect();
     dispatch(emitDisconnectAction());
 }

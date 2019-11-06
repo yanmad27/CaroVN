@@ -4,7 +4,6 @@ import * as SocketActions from 'reduxs/reducers/socket/action';
 import { isNull } from 'util';
 import ActionTypes from './actionTypes';
 
-
 export const emitSignInAction = (user) => {
     console.log("UserAction:: sign in is triggered...");
     return {
@@ -36,6 +35,13 @@ export const emitRemoveTokenAction = () => {
     }
 }
 
+export const emitUpdateInfoAction = newInfo => {
+    return {
+        type: ActionTypes.UPDATE_INFO,
+        payload: newInfo,
+    }
+}
+
 export const SignIn = (username, password) => async (dispatch) => {
 
     const responseData = await UserHandler.SignIn(username, password);
@@ -45,7 +51,7 @@ export const SignIn = (username, password) => async (dispatch) => {
         dispatch(emitSetTokenAction(token));
         dispatch(emitSignInAction(user));
         dispatch(SocketActions.emitConnectAction());
-        history.push('/game');
+        history.push('/main');
     }
 }
 
@@ -70,4 +76,10 @@ export const SetToken = (token) => async (dispatch) => {
 export const RemoveToken = () => async (dispatch) => {
 
     dispatch(emitRemoveTokenAction());
+}
+
+export const updateInfo = newInfo => async dispatch => {
+
+    await UserHandler.UpdateInfo({ ...newInfo });
+    dispatch(emitUpdateInfoAction({ ...newInfo }));
 }

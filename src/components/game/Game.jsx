@@ -12,6 +12,8 @@ import Board from 'components/board/Board';
 import * as SocketHandlers from 'reduxs/handlers/socket/index';
 import * as SocketActions from 'reduxs/reducers/socket/action';
 import Dialog from './dialog/dialog';
+import ResultDialog from './dialog/ResultDialog';
+import TieDialog from './dialog/TieDialog';
 
 class Game extends React.Component {
 
@@ -19,7 +21,57 @@ class Game extends React.Component {
     super(props);
     this.state = {
       open: true,
+      ispared: false,
+      turn: '',
+      dialogopen: false,
+      result: '',
+      tieDialogOpen: false,
     }
+    SocketHandlers.subcribePairPlayer(this.subcribePairPlayerCallBack);
+    SocketHandlers.subcribeHaveWinner(this.subcribesubcribeHaveWinnerCallBack);
+    SocketHandlers.subcribeRequireTie(this.subcribeRequireTieCallBack);
+  }
+
+  subcribePairPlayerCallBack = host => {
+    const { joinHost } = this.props;
+    const turn = host === SocketHandlers.getSocketID() ? 'trước' : 'sau';
+    joinHost(host);
+    console.log('subcribePairPlayerCallBack')
+    this.setState({
+      ispared: true,
+      turn
+    })
+    setTimeout(() => {
+      this.setState({
+        open: false,
+      })
+    }, 1000);
+
+  }
+
+  subcribesubcribeHaveWinnerCallBack = data => {
+
+    const { host } = data;
+    const socketid = SocketHandlers.getSocketID();
+
+    let result = 'thua';
+    if (socketid === host) {
+      result = 'thắng';
+    }
+    this.setState({
+      dialogopen: true,
+      result,
+    })
+
+  }
+
+  subcribeRequireTieCallBack = () => {
+
+    this.setState({
+      tieDialogOpen: true,
+    })
+
+
   }
 
   onPlayAgainClick = () => {
@@ -49,24 +101,34 @@ class Game extends React.Component {
       open: false,
     })
     SocketHandlers.emitFindPlayer();
-    SocketHandlers.subcribePairPlayer(this.subcribePairPlayerCallBack);
   }
 
-  subcribePairPlayerCallBack = host => {
-    const { joinHost } = this.props;
-    joinHost(host);
-    console.log('subcribePairPlayerCallBack')
+  playagain = () => {
 
   }
+
+  quit = () => {
+
+  }
+
+  requireTieClick = () => {
+
+    SocketHandlers.emitRequireTie();
+  }
+
 
   render() {
 
-    const { open } = this.state;
+    const { open, ispared, turn, dialogopen, result } = this.state;
+    const { tieDialogOpen } = this.state;
     console.log("Game is rendering...");
 
     return (
       <div className="App">
-        <Dialog open={open} handleClose={this.handleCloseDialog} handleAccept={this.handleAccept} />
+        <Dialog open={open} ispared={ispared} turn={turn} />
+        <ResultDialog open={dialogopen} result={result} playagain={this.playagain} quit={this.quit} />
+        <TieDialog open={tieDialogOpen} />
+
         <span>CARO VN</span>
         <div
           style={{
@@ -79,6 +141,9 @@ class Game extends React.Component {
               <span>Next turn is: O</span>
               <button type="button" onClick={this.onPlayAgainClick}>
                 Play again
+              </button>
+              <button type="button" onClick={this.requireTieClick}>
+                Xin hòa
               </button>
             </div>
             <div>

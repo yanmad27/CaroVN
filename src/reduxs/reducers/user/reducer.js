@@ -18,6 +18,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return { ...state, token: action.payload };
         case ActionTypes.REMOVE_TOKEN:
             return { ...state, token: '', username: '' }
+        case ActionTypes.UPDATE_INFO:
+            return { ...state, nickname: action.payload.nickname }
         default:
             return { ...state };
     }
